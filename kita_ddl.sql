@@ -1,6 +1,6 @@
 -- 1) 회원가입 테이블
-CREATE DATABASE trit;
-USE trit;
+CREATE DATABASE dimaProject;
+USE dimaProject;
 
 DROP TABLE IF EXISTS kitauser;
 
