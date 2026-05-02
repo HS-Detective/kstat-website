@@ -1,0 +1,278 @@
+@charset "UTF-8";
+
+:root {
+  --color-text-dark: #000000;
+  --text-dark: #333;
+  --text-light: #fff;
+  --text-muted: #999;
+  --accent-red: #e74c3c;
+  --accent-blue: #2980b9;
+  --light-gray-bg: #f6f7f9;
+  --border-color-dark: #ccc;
+  --border-color-light: #eee;
+  --button-bg: #004085;
+  --control-h: 44px;
+}
+
+/* 게시판 영역, 제목 - board.css에서 통일 */
+
+/* 안내 박스 */
+.news-info-box {
+  background-color: var(--light-gray-bg);
+  padding: 25px 30px;
+  margin-bottom: 40px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* 컨트롤 영역 */
+.news-controls {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.news-stats {
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  gap: 20px;
+}
+
+.search-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap; /* 줄바꿈 방지 */
+}
+
+/* 드롭다운 */
+.dropdown-select {
+  position: relative;
+  z-index: 30;
+  width: auto;
+  min-width: 130px;
+  height: var(--control-h);
+  display: inline-block;
+  border: 1px solid var(--border-color-dark);
+  border-radius: 10px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  padding: 0 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  width: 100%;
+  height: var(--control-h);
+  white-space: nowrap;
+}
+
+.selected-option {
+  white-space: nowrap;
+  max-width: calc(100% - 18px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-menu {
+  min-width: 100%;
+  position: absolute;
+  z-index: 9999;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid var(--border-color-dark);
+  border-radius: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  display: none;
+}
+
+.dropdown-select.active .dropdown-menu { display: block; }
+.dropdown-menu li {
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+
+.dropdown-menu li:hover {
+  background-color: var(--light-gray-bg);
+}
+
+/* 검색창 */
+.search-input-wrapper input[type="text"] {
+  width: 200px;
+  height: var(--control-h);
+  line-height: var(--control-h);
+  padding: 0 14px;
+  border: 1px solid var(--border-color-dark);
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s;
+  box-sizing: border-box;
+}
+
+.search-input-wrapper input[type="text"]:focus {
+  border-color: var(--accent-blue);
+}
+
+.search-btn {
+  background-color: var(--primary-bg);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  width: 84px;
+  height: var(--control-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* 테이블 */
+.news-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 16px;
+}
+
+.news-table thead {
+  background-color: var(--light-gray-bg);
+  border-top: 2px solid #333333;
+  border-bottom: 1px solid var(--border-color-dark);
+}
+
+.news-table th,
+.news-table td {
+  padding: 18px 10px;
+}
+
+/* 행 구분선 + hover 효과 */
+.news-table tbody td { border-bottom: 1px solid #E6E9EE; }
+.news-table tbody tr:hover td { background-color: #F8FAFD; }
+
+/* 테이블 칸 너비 조정 */
+.news-table th:nth-child(1), /* 번호 */
+.news-table td:nth-child(1) {
+  width: 7%;
+}
+
+.news-table th:nth-child(2), /* 제목 */
+.news-table td:nth-child(2) {
+  width: 40%;
+}
+
+.news-table th:nth-child(3), /* 작성자 */
+.news-table td:nth-child(3) {
+  width: 12%;
+}
+
+.news-table th:nth-child(4), /* 작성일 */
+.news-table td:nth-child(4) {
+  width: 16%;
+}
+
+.news-table th:nth-child(5), /* 진행현황 */
+.news-table td:nth-child(5) {
+  width: 15%;
+}
+
+.news-table th:nth-child(6), /* 조회수 */
+.news-table td:nth-child(6) {
+  width: 10%;
+}
+
+.news-title {
+  text-align: left;
+  padding-left: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* 기존의 white-space: nowrap; 속성은 다중 라인 표시에 불필요하므로 제거합니다. */
+}
+
+.news-title a {
+  color: var(--text-dark);
+  text-decoration: none;
+}
+
+.news-title a:hover {
+  color: #3551a4;
+  text-decoration: underline;
+}
+
+/* 상태 스타일 */
+.status-inprogress {
+  color: var(--accent-red);
+  font-weight: 600;
+}
+
+.status-complete {
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+/* 글쓰기 버튼 */
+.news-footer-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+}
+
+.write-post-btn {
+  background-color: var(--button-bg);
+  color: var(--text-light);
+  border-radius: 10px;
+  padding: 9px 30px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* 페이지네이션 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.pagination ul {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination li a {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.pagination li a.active {
+  font-weight: 700;
+  text-decoration: underline;
+  color: #ce1126;
+}

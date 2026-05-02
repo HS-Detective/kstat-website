@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+   href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700&family=Inter:wght@400&display=swap"
+   rel="stylesheet">
+
+<title>게시글 상세 (관리자용)</title>
+
+<link rel="stylesheet" th:href="@{/css/boardDetail_manager.css}">
+<link rel="stylesheet" th:href="@{/css/global.css}">
+
+<link rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<script th:src="@{/js/boardDetail_manager.js}" defer></script>
+<script th:src="@{/js/menuBar.js}" defer></script>
+
+</head>
+
+<body>
+   <!-- Header 프래그먼트 -->
+   <div th:replace="~{fragments/header :: headerFragment}"></div>
+
+   <main id="main-content" class="main-section">
+      <div class="content-wrapper">
+
+         <h1 class="page-title">게시글 보기</h1>
+
+         <div class="info-box">
+            <p>
+               작성하신 글에 개인 정보, 광고성 정보, 타인의 명예를 훼손하는 내용 등이 포함된 경우에는 <br> 게시글이
+               삭제될 수 있습니다.<br> 더 나은 서비스를 위해 주신 의견은 소중히 반영하겠습니다.
+            </p>
+         </div>
+
+         <!-- 게시글 상세 본문 -->
+         <div class="post-table">
+            <div class="table-row">
+               <div class="table-label label-dark">제목</div>
+               <div class="table-data data-dark" th:text="${board.boardTitle}"></div>
+            </div>
+            <div class="table-row">
+               <div class="table-label">작성자</div>
+               <div class="table-data" th:text="${board.maskedWriterName}"></div>
+            </div>
+            <div class="table-row">
+               <div class="table-label">작성일</div>
+               <div class="table-data"
+                  th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd')}"></div>
+            </div>
+            <div class="table-row content-row">
+               <div class="table-label">글쓰기</div>
+               <div class="table-data content-body"
+                  th:text="${board.boardContent}"></div>
+            </div>
+            <div class="table-row">
+               <div class="table-label">첨부파일</div>
+               <div class="table-data file-data">
+                  <span th:if="${board.originalFilename == null}">첨부된 파일 없음</span> <a
+                     th:if="${board.originalFilename != null}"
+                     th:href="@{/board/download(boardSeq=${board.boardSeq})}"> <i
+                     class="fa-solid fa-file-arrow-down"></i> <span
+                     th:text="${board.originalFilename}"></span>
+                  </a>
+               </div>
+            </div>
+
+            <!-- 답변 등록 -->
+            <form class="reply-form" id="replyForm" th:if="${reply == null}"
+               th:action="@{/reply/insertReply}" method="post">
+               <input type="hidden" name="boardSeq" th:value="${board.boardSeq}">
+               <input type="text" id="replyContent" name="replyContent"
+                  placeholder="관리자의 답변 입력창입니다.">
+               <button type="submit" class="submit-reply-btn">답변 등록</button>
+            </form>
+
+            <!-- 답변 테이블 -->
+            <table class="reply-table" th:if="${reply != null}">
+               <colgroup>
+                  <col>
+                  <!-- 내용 -->
+                  <col style="width: 150px">
+                  <!-- 날짜 -->
+                  <col style="width: 150px">
+                  <!-- 관리 -->
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th>답변내용</th>
+                     <th>답변날짜</th>
+                     <th>답변관리</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr class="reply-row">
+                     <td class="content-cell" th:text="${reply.replyContent}">답변
+                        내용</td>
+                     <td class="date-cell"
+                        th:text="${#temporals.format(reply.createDate,'yyyy-MM-dd')}"></td>
+                     <td class="actions-cell">
+                        <button type="button" class="btn btn-edit edit-btn">수정</button>
+                        <button type="button" class="btn btn-delete delete-btn">삭제</button>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+
+            <!-- 하단 버튼 -->
+            <div class="bottom-actions">
+               <a th:href="@{/board/boardList}" class="list-btn">글목록</a>
+               <div class="post-actions">
+                  <button type="button" class="delete-post-btn"
+                     th:attr="data-board-seq=${board.boardSeq}">글삭제</button>
+               </div>
+            </div>
+         </div>
+         <!-- /.post-table -->
+
+      </div>
+      <!-- /.content-wrapper -->
+   </main>
+
+   <!-- Footer 프래그먼트 -->
+   <div th:replace="~{fragments/footer :: footerFragment}"></div>
+</body>
+</html>

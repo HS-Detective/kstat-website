@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!-- 
+  Spring Security Thymeleaf 확장을 사용하려면 <html> 태그에
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security6" 네임스페이스를 추가해야 합니다.
+  (Spring Security 5 버전을 사용하신다면 숫자만 5로 변경해주세요)
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<body>
+
+    <!-- th:fragment="headerFragment"를 사용하여 이 부분을 프래그먼트로 정의합니다. -->
+    <header id="section-header" class="site-header" th:fragment="headerFragment">
+        <div class="container header-container">
+            <a href="/" class="kstatIcon" id="kstatIcon"> <!-- 로고 클릭 시 메인 페이지로 이동하도록 href="/" 추가 -->
+                <img th:src="@{/images/kstat_logo.png}" alt="K-stat Logo">
+            </a>
+            <nav class="main-navigation">
+                <a href="#">국내통계</a>
+                <a href="#">해외통계</a>
+                <a href="#">IMF 세계통계</a>
+                <a href="#">맞춤분석</a>
+                <a href="#">자사통계</a>
+                <a href="#" id="board">이용문의</a>
+            </nav>
+
+            <!-- 1. 인증되지 않은 사용자 (로그아웃 상태)에게만 보임 -->
+            <th:block sec:authorize="isAnonymous()">
+                <!-- th:href를 사용하여 Thymeleaf가 URL을 관리하도록 변경 -->
+                <a th:href="@{/user/login}" class="loginBtn">로그인</a>
+            </th:block>
+
+            <!-- 2. 인증된 사용자 (로그인 상태)에게만 보임 -->
+            <th:block sec:authorize="isAuthenticated()">
+                <!-- form을 사용하여 POST 방식으로 로그아웃 요청을 보냅니다. -->
+                <!-- th:action을 통해 SecurityConfig에 설정된 /user/logout으로 요청을 보냅니다. -->
+                <form th:action="@{/user/logout}" method="post" style="display: inline;">
+                    <!-- 버튼 클릭 시 form이 submit되어 로그아웃이 처리됩니다. -->
+                    <button type="submit" class="logoutBtn">로그아웃</button>
+                </form>
+            </th:block>
+            <!-- ========================================================== -->
+
+            <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+        </div>
+        <a href="#" class="floating-chat-icon">
+            <img th:src="@{/images/Trit_logo.png}" alt="Trit Chat Icon">
+        </a>
+
+        <!-- Chatbot Iframe Container -->
+        <div id="chatbot-iframe-container"
+            style="display: none; position: fixed; bottom: 80px; right: 150px; width: 400px; height: 557px; z-index: 999; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); overflow: hidden; background-color: white; flex-direction: column;">
+            <div id="chatbot-drag-header"
+                style="height: 40px; background-color: #2f6393; cursor: move; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative;">
+                TRIT Chatbot
+                <button id="chatbot-close-btn" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
+                <button id="chatbot-home-btn" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: white; font-size: 20px; cursor: pointer;">&lt;</button>
+            </div>
+            <iframe id="chatbot-iframe" th:src="@{/chat}" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </header>
+
+</body>
+
+</html>

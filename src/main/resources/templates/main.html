@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Page</title>
+  <title>K-stat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer th:src="@{/js/trade-insights.js}"></script>
+  <script defer th:src="@{/js/menuBar.js}"></script>
+</head>
+
+<body class="fit-one-screen snap-lock">
+
+  <!-- Header 프래그먼트 삽입 -->
+  <div th:replace="~{fragments/header :: headerFragment}"></div>
+
+  <!-- 스크롤 스냅을 적용할 모든 섹션을 감싸는 컨테이너 -->
+  <main class="scroll-container">
+
+    <section id="section-trit" class="section section-trit snap-section">
+      <div class="container main">
+        <div class="trit-card card">
+          <div class="trit-image-container">
+            <img th:src="@{/images/trit_move.gif}" alt="TRIT animation" class="hero-gif">
+          </div>
+          <div class="trit-text-container">
+            <h1 class="trit-title">TRIT</h1>
+            <p class="trit-subtitle">KITA의 통계 사이트 K-stat을 안내해주는 도우미 챗봇</p>
+            <ol class="trit-features">
+              <li>
+                <span class="feature-number">01</span>
+                <p class="feature-text">원하는 상품의 HS CODE가 궁금하신가요?</p>
+              </li>
+              <li>
+                <span class="feature-number">02</span>
+                <p class="feature-text">질문으로 간편하게 알아보는 무역 통계</p>
+              </li>
+              <li>
+                <span class="feature-number">03</span>
+                <p class="feature-text">복잡한 메뉴도 질문 하나로 간편하게!</p>
+              </li>
+              <li>
+                <span class="feature-number">04</span>
+                <p class="feature-text">이 외의 다양한 FAQ까지!</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ▼▼ 무역통계 한눈에 ▼▼ -->
+    <section id="section-trade-insights" class="section snap-section">
+      <div class="container main">
+
+        <!-- 헤더 + 전역 지표를 같은 그리드에 묶어서 정렬 일치 -->
+        <div class="ti-header-grid">
+          <div class="ti-header-left">
+            <h2 class="news-section-title ti-page-title">
+              무역통계 한눈에
+              <!-- 섹션 안내 툴팁 (제목 우측 아래) -->
+              <span class="ti-tooltip ti-tooltip--right ti-tooltip--lg">
+                <button type="button" class="ti-info-btn" aria-expanded="false" aria-label="데이터 기준 안내">ⓘ</button>
+                <div class="ti-tooltip-bubble" role="tooltip">
+                  <p><strong>데이터 범위</strong>: 2022.01 ~ 2024.12 (MTI 4단위)</p>
+                  <p><strong>국가 목록</strong>: 최신 집계월(2024.12) <b>수출금액</b> 상위 20개</p>
+                  <p><strong>품목 목록</strong>: 최신 집계월(2024.12) <b>수출금액</b> 상위 20개 (MTI 4단위)</p>
+                </div>
+              </span>
+            </h2>
+          </div>
+
+          <p class="news-section-subtitle ti-header-subtitle">
+            필터 선택 후 아래 차트가 자동 업데이트 됩니다.
+          </p>
+
+          <!-- 우측 정렬 전역 지표 (오른쪽 끝이 카드1의 ‘품목’과 정확히 일렬) -->
+          <div class="ti-header-right">
+            <label class="ti-field">
+              <span class="ti-label">지표</span>
+              <select id="ti-metric" class="ui-select ti-input ti-metric-select">
+                <option value="export" selected>수출</option>
+                <option value="import">수입</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- 카드 1: 월별 추이 -->
+        <article id="ti-card1" class="card">
+          <h3 class="ti-card-title">
+            월별 추이
+            <span id="ti-chip-range" class="ti-chip"></span>
+            <span id="ti-chip-metric" class="ti-chip ti-chip--metric"></span>
+
+            <!-- 카드 설명 툴팁 -->
+            <span class="ti-tooltip ti-tooltip--right">
+              <button type="button" class="ti-info-btn" aria-expanded="false" aria-label="월별 추이 설명">ⓘ</button>
+              <div class="ti-tooltip-bubble" role="tooltip">
+                선택한 <b>기간/국가/품목</b> 조건의 월별 총액 변화를 보여줍니다.
+              </div>
+            </span>
+          </h3>
+
+          <!-- 카드1 필터 (그리드 3열: 기간/국가/품목) -->
+          <div class="ti-filter-row--card1">
+            <label class="ti-field">
+              <span class="ti-label">기간</span>
+              <div class="ti-range">
+                <input id="ti1-from" type="month" class="ti-month" min="2022-01" max="2024-12" value="2023-01" />
+                <span class="ti-range-sep">~</span>
+                <input id="ti1-to" type="month" class="ti-month" min="2022-01" max="2024-12" value="2024-12" />
+              </div>
+            </label>
+
+            <label class="ti-field">
+              <span class="ti-label">국가</span>
+              <select id="ti1-country" class="ui-select ti-input"></select>
+            </label>
+
+            <label class="ti-field">
+              <span class="ti-label">
+                품목 (MTI코드)
+                <!-- MTI 안내 툴팁 -->
+                <span class="ti-tooltip ti-tooltip--right">
+                  <button type="button" class="ti-info-btn" aria-expanded="false" aria-label="MTI코드 안내">ⓘ</button>
+                  <div class="ti-tooltip-bubble" role="tooltip">
+                    <p><b>MTI CODE</b>는 산업통상자원부가 무역동향 분석을 위해 만든 <b>6단위</b> 품목 분류 체계입니다.</p>
+                    <ul>
+                      <li>HS CODE: WCO 세계관세기구의 품목분류(세계 공통 6단위, 한국은 10자리 HSK 사용)</li>
+                      <li>MTI CODE: 비슷한 HS 코드를 묶어 <b>코드/품목명</b>을 부여한 집계용 분류</li>
+                    </ul>
+                  </div>
+                </span>
+              </span>
+              <select id="ti1-mti4" class="ui-select ti-input"></select>
+            </label>
+          </div>
+
+          <div class="ti-chart ti-chart--bar"><canvas id="ti-chart-trend"></canvas></div>
+
+          <p class="ti-meta"><span class="unit-badge">단위: <b>백만 USD</b> | 출처: K-stat</span></p>
+        </article>
+
+        <!-- 카드 2·3 (세로 구분선 포함) -->
+        <div class="ti-grid ti-grid--with-divider">
+          <!-- 카드 2 -->
+          <article id="ti-card2" class="card">
+            <h3 class="ti-card-title">
+              연도 Top5 국가
+              <span id="ti2-chip-year" class="ti-chip"></span>
+              <span id="ti2-chip-metric" class="ti-chip ti-chip--metric"></span>
+              <span class="ti-tooltip ti-tooltip--right">
+                <button type="button" class="ti-info-btn" aria-expanded="false" aria-label="연도 Top5 설명">ⓘ</button>
+                <div class="ti-tooltip-bubble" role="tooltip">
+                  선택 <b>연도</b>의 교역 규모가 큰 상위 5개 국가를 비교합니다.
+                  품목(MTI)을 선택하면 해당 품목 기준 상위 국가를 보여줍니다.
+                </div>
+              </span>
+            </h3>
+
+            <div class="ti-filter-inline">
+              <label class="ti-field">
+                <span class="ti-label">연도</span>
+                <select id="ti2-year" class="ui-select ti-input">
+                  <option>2024</option>
+                  <option>2023</option>
+                  <option>2022</option>
+                </select>
+              </label>
+              <label class="ti-field">
+                <span class="ti-label">품목 (MTI 코드)</span>
+                <select id="ti2-mti4" class="ui-select ti-input"></select>
+              </label>
+            </div>
+
+            <div class="ti-chart ti-chart--bar"><canvas id="ti-chart-top"></canvas></div>
+            <p class="ti-meta"><span class="unit-badge">단위: <b>백만 USD</b> | 출처: K-stat</span></p>
+          </article>
+
+          <!-- 카드 3 -->
+          <article id="ti-card3" class="card">
+            <h3 class="ti-card-title">
+              <span id="ti3-chip-country">국가</span>의 품목 Top10
+              <span id="ti3-chip-year" class="ti-chip"></span>
+              <span id="ti3-chip-metric" class="ti-chip ti-chip--metric"></span>
+              <span class="ti-tooltip ti-tooltip--right">
+                <button type="button" class="ti-info-btn" aria-expanded="false" aria-label="국가 Top10 설명">ⓘ</button>
+                <div class="ti-tooltip-bubble" role="tooltip">
+                  선택 국가의 수출/수입에서 비중이 큰 상위 10개 품목(금액 기준)을 도넛으로 표시합니다.
+                </div>
+              </span>
+            </h3>
+
+            <div class="ti-filter-inline">
+              <label class="ti-field">
+                <span class="ti-label">연도</span>
+                <select id="ti3-year" class="ui-select ti-input">
+                  <option>2024</option>
+                  <option>2023</option>
+                  <option>2022</option>
+                </select>
+              </label>
+              <label class="ti-field">
+                <span class="ti-label">국가</span>
+                <select id="ti3-country" class="ui-select ti-input"></select>
+              </label>
+            </div>
+
+            <div class="ti-chart ti-chart--donut"><canvas id="ti-chart-share"></canvas></div>
+            <p class="ti-meta"><span class="unit-badge">단위: USD | 출처: K-stat</span></p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- ▲▲ 무역통계 한눈에 ▲▲ -->
+
+    <section id="section-news" class="section section-news snap-section">
+      <div class="container main">
+        <header class="news-section-header">
+          <div class="news-section-header-text">
+            <h2 class="news-section-title">무역 뉴스</h2>
+            <p class="news-section-subtitle">무역과 관련된 최신 동향을 알려드립니다. 카드 뉴스를 누르면 해당 페이지로 넘어갑니다.</p>
+          </div>
+          <a href="news/newsList" class="discover-button">더보기</a>
+        </header>
+        <div class="news-grid">
+          <article class="news-card card" th:each="n : ${newsList}" th:data-news-link="${n.newsLink}">
+            <h3 class="news-card-title" th:text="${n.newsTitle}"></h3>
+            <div class="news-card-image-wrapper">
+              <img th:src="${n.newsThumbnail != null ? n.newsThumbnail : '/images/news_thumbnail.png'}"
+                alt="News Thumbnail">
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section id="section-first" class="section section-first snap-section">
+      <div class="container main">
+        <h2 class="section-first-title">처음이신가요?</h2>
+        <div class="info-grid">
+          <a href="user/first2">
+            <article class="info-card card">
+              <div class="info-card-image-wrapper">
+                <img th:src="@{/images/HSCode_thumbnail.png}" alt="HS Code Icon">
+              </div>
+              <div class="info-card-text">
+                <h4 class="info-card-title">품목분류 코드</h4>
+                <p class="info-card-description">무역 통계를 볼 때 필수적인 품목분류 코드에 대해 알려드립니다.</p>
+              </div>
+            </article>
+          </a>
+          <article class="info-card PDF card" data-pdf-link="/downloads/무쉽따.pdf">
+            <div class="info-card-image-wrapper">
+              <img th:src="@{/images/mst_thumbnail.png}" alt="PDF Download Icon">
+            </div>
+            <div class="info-card-text">
+              <h4 class="info-card-title">무쉽따 PDF 다운로드</h4>
+              <p class="info-card-description">kstat 사이트를 처음 이용하는 사람들을 위한 쉽고 가벼운 안내서</p>
+            </div>
+          </article>
+          <a href="https://stat.kita.net/stat/guide/guide_02.screen"
+            onclick="window.open(this.href, '_blank', 'width=1000, height=700'); return false;">
+            <article class="info-card card">
+              <div class="info-card-image-wrapper">
+                <img th:src="@{/images/statistic_thumbnail.png}" alt="Statistics service guide icon">
+              </div>
+              <div class="info-card-text">
+                <h4 class="info-card-title">통계 서비스 활용법</h4>
+                <p class="info-card-description">통계와 관련된 기초적인 용어들을 알려드립니다.</p>
+              </div>
+            </article>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer 프래그먼트 삽입 -->
+    <div th:replace="~{fragments/footer :: footerFragment}"></div>
+  </main>
+
+  <!-- 분리된 main.js 파일 연결 (body 태그 닫기 직전에 위치시키는 것이 좋습니다) -->
+  <script th:src="@{/js/main.js}"></script>
+
+  <script>
+    // hero-gif 클릭 시 챗봇 iframe을 표시하는 스크립트
+    document.addEventListener('DOMContentLoaded', () => {
+      const heroGif = document.querySelector('.hero-gif');
+      // 챗봇 관련 요소들은 header.html 프래그먼트를 통해 이미 페이지에 존재합니다.
+      const chatbotContainer = document.getElementById('chatbot-iframe-container');
+      const floatingChatIcon = document.querySelector('.floating-chat-icon');
+
+      if (heroGif && chatbotContainer && floatingChatIcon) {
+        heroGif.addEventListener('click', (e) => {
+          e.preventDefault(); // 링크 등 기본 동작 방지
+          e.stopImmediatePropagation(); // 이 요소에 연결된 다른 클릭 이벤트가 실행되는 것을 막음
+
+          // floating-chat-icon을 클릭했을 때와 동일한 동작을 수행합니다.
+          chatbotContainer.style.display = 'flex';
+          floatingChatIcon.style.display = 'none';
+          sessionStorage.setItem('trit_chatbot_open', 'true');
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

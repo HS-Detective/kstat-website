@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <title>게시글 등록</title>
+
+  <link rel="stylesheet" th:href="@{/css/boardWrite.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+  <link rel="stylesheet" th:href="@{/css/board.css}">
+
+  <script th:src="@{/js/boardWrite.js}" defer></script>
+  <script th:src="@{/js/menuBar.js}" defer></script>
+</head>
+
+<body>
+  <!-- Header 프래그먼트 삽입 -->
+  <div th:replace="~{fragments/header :: headerFragment}"></div>
+  
+  <!-- 게시글 작성 영역 -->
+  <main id="main-content">
+    <section class="post-creation-section">
+      <div class="container">
+        <div class="main-container">
+        
+          <!-- 페이지 제목 -->
+          <div class="page-title-wrapper">
+            <h1 th:text="${isEdit} ? '게시글 수정' : '게시글 등록'"></h1>
+          </div>
+        
+        <!-- 안내 문구 -->
+          <div class="info-box">
+            <p>작성하신 글에 개인 정보, 광고성 정보, 타인의 명예를 훼손하는 내용 등이 포함된 경우에는 <br>
+            게시글이 삭제될 수 있습니다.<br>
+            더 나은 서비스를 위해 주신 의견은 소중히 반영하겠습니다.</p>
+          </div>
+        
+        <!-- 폼 시작 -->
+          <form class="post-form" 
+             th:action="${isEdit} ? @{/board/boardUpdate} : @{/board/boardWrite}"
+             method="post" enctype="multipart/form-data">
+             
+             <!-- 수정 모드일 때 PK와 기존 파일명 전달 -->
+           <input type="hidden" name="boardSeq"        th:if="${isEdit}" th:value="${board.boardSeq}">
+           <input type="hidden" name="originalFilename" th:if="${isEdit}" th:value="${board.originalFilename}">
+
+          <!-- 검색 파라미터 유지(컨트롤러에서 받으므로) -->
+          <input type="hidden" name="searchCategory" th:value="${searchCategory}">
+          <input type="hidden" name="searchKeyword"  th:value="${searchKeyword}">
+          
+            <!-- 제목 -->
+            <div class="form-row">
+              <label for="boardTitle" class="form-label">제목</label>
+              <div class="form-control">
+                <input type="text" id="boardTitle" name="boardTitle" maxlength="50" 
+                      placeholder="글제목을 50자 이내로 입력해주세요." th:value="${board.boardTitle}">
+              </div>
+            </div>
+            
+            <!-- 작성자 (마스킹된 실명 표시) -->
+            <div class="form-row">
+              <label for="maskedWriterName" class="form-label">작성자</label>
+              <div class="form-control">
+                <input type="text" id="maskedWriterName" name="maskedWriterName" readonly 
+                       th:value="${maskedWriterName}">
+                <!-- 서버 전송용 작성자 ID -->
+                <input type="hidden" id="boardWriter" name="boardWriter" th:value="${boardWriter}">
+              </div>
+            </div>
+            
+            <!-- 작성일 (UI 표시용) -->
+            <div class="form-row">
+              <label for="createDate" class="form-label">작성일</label>
+              <div class="form-control">
+                <input type="text" id="createDate" readonly 
+                      th:value="${#temporals.format(T(java.time.LocalDateTime).now(), 'yyyy-MM-dd HH:mm')}">
+              </div>
+            </div>
+            
+            <!-- 본문 -->
+            <div class="form-row">
+              <label for="boardContent" class="form-label content-label">글쓰기</label>
+              <div class="form-control">
+                <textarea id="boardContent" name="boardContent" maxlength="2000"
+                          placeholder="본문은 최대 2000자까지 입력 가능합니다." 
+                          th:text="${board.boardContent}"></textarea>
+              </div>
+            </div>
+            
+            <!-- 첨부파일 -->
+            <div class="form-row">
+              <label for="file-upload-input" class="form-label">첨부파일</label>
+              <div class="form-control">
+                <button type="button" class="file-upload-btn" id="file-upload-btn">파일 선택</button>
+                <input type="file" id="file-upload-input" name="uploadFile" hidden>
+                <span id="file-name" 
+                     th:text="${board.originalFilename != null ? board.originalFilename : '선택된 파일 없음'}">
+                     선택된 파일 없음</span>          
+              </div>
+            </div>
+
+          <!-- 액션 버튼 -->
+          <div class="form-actions">
+            <a th:href="@{/board/boardList}" class="action-btn btn-list" id="btn-list">글목록</a>
+           <div class="actions-right">
+             <button type="submit" class="action-btn btn-submit" id="btn-submit" 
+                    th:text="${isEdit} ? '수정' : '등록'"
+                    disabled>등록</button>
+             <button type="button" class="action-btn btn-cancel" id="btn-cancel">취소</button>
+            </div>
+          </div>
+
+        </form>
+        <!-- 폼 끝 -->
+
+         </div>
+      </div>
+    </section>
+  </main>
+          
+  <!-- Footer 프래그먼트 삽입 -->
+  <div th:replace="~{fragments/footer :: footerFragment}"></div>
+  
+</body>
+</html>

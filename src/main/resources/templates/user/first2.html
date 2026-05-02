@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://thymeleaf.org">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>처음이신가요</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" th:href="@{/css/global.css}">
+   <link rel="stylesheet" th:href="@{/css/first2.css}">
+   <script defer th:src="@{/js/menuBar.js}"></script>
+</head>
+
+<body>
+
+   <div th:replace="~{fragments/header :: headerFragment}"></div>
+
+   <main id="section-main" class="main-content">
+      <div class="page-title-wrapper">
+         <h1 class="title">품목분류 코드</h1>
+      </div>
+
+      <div class="section">
+         <div class="section-title">HS CODE가 무엇인가요?</div>
+         <div class="section-content">
+            <ul class="outerUl">
+               <li><span class="point"><b>HS CODE</b></span> (Harmonized Commodity Description and Coding
+                  System)는<br><span class="point">WCO 세계관세기구</span>에서 <span class="point">관세징수 및 통계작성</span>을 위해
+                  분류한 품명 및 부호체계입니다.</li>
+               <li><span class="point"><b>세계 공통은 6단위</b></span>이며, 6단위 이하는 국가마다 상이하게 분류됩니다.<br>
+                  한국은 국제 공통 6자리에 더해 물건의 세부 분류를 위해 4자리를 추가한 <span class="point">HSK 코드(10자리)</span>를 사용하고 있습니다.<br>
+                  (한국 10단위, 미국 10단위, 일본 9단위, 중국 8단위까지 분류)</li>
+               <li>
+                  <span class="point"><b>HS CODE 분류체계</b></span>
+                  <ul class="innerUl">
+                     <li>1~2자리(류): 재질과 기능에 따라 전물품을 분류</li>
+                     <li>3~4자리(호): 가공단계별로 분류. 무역량 및 기타 상품개발에 따른 호의 균등을 유지하기 위해
+                        <ul class="innerinnerUl">
+                           <li>-&nbsp;&nbsp;분할 : 무역량이 많거나 통계집계를 필요로 한 품목</li>
+                           <li>-&nbsp;&nbsp;이전 : CCCN체제의 정비에 따른 동일 상품군의 형성</li>
+                           <li>-&nbsp;&nbsp;삭제 : 무역량이 미미한 품목</li>
+                           <li>-&nbsp;&nbsp;추가 : 각국의 특산물, 신개발품, 무역거래량이 많은 품목들.</li>
+                        </ul>
+                     </li>
+                     <li>5~6자리(소호): 상기기준에 입각하면서 운송, 보험들에도 적용, 사용할 수 있도록 확대.</li>
+                     <li>7~10자리(통계부호): 각국의 경제적 사정에 따라 자발적으로 분류할 수 있는 Code.</li>
+                     <li><span class="point">국제 무역에 있어 HS code는 첫 4자리 + 2자리가 중요한 부분이고 통일되어 있음. (예 : 3402.11-
+                           )</span></li>
+                     <li><span class="point">HS code는 무역 당사자 간 보다는 무역 당사국에 필요한 자료임 (수입시 세금부과를 위해, 수출품의 통제 및 통계를
+                           위해)</span></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+      </div>
+
+      <div class="section">
+         <div class="section-title">HS CODE는 왜 필요한가요?</div>
+         <div class="section-content">
+            <ul class="outerUl">
+               <li>HS CODE는 수입 시 부과되는 <span class="point"><b>세율을 결정하는 기준</b></span>이며, <span class="point"><b>수출입 통제 및 통계
+                     분류</b></span>를 위해 필요합니다.</li>
+               <li>HS CODE를 통해 품목에 부과되는 관세를 검색하거나 수출 및 수입품의 통계를 확인할 수 있습니다.</li>
+               <li><span class="point"><b>수출입신고서</b></span>의 세번부호란에 HS CODE를 기재해야 합니다. 수출입신고시 HS CODE를 잘못 입력한 경우, 가산세가 부과될 수 있습니다.</li>
+               <li>관세법 제226조에 따른 <span class="point"><b>수출입 요건</b></span>을 확인하기 위해서는 HS CODE가 필요합니다.</li>
+               <li><span class="point"><b>간이정액환급액</b></span>은 HS CODE에 따라 결정됩니다. 정확한 HS CODE를 알아야 관세의 과다 또는 과소환급의 위험성을 줄어듭니다.</li>
+               <li>K-stat에서 HS CODE를 통해 자세한 무역통계를 확인할 수 있습니다.</li>
+            </ul>
+         </div>
+      </div>
+
+      <div class="section">
+         <div class="section-title">MTI CODE와는 무엇이 다른가요?</div>
+         <div class="section-content">
+            <ul class="outerUl">
+               <li>HS code는 WCO 세계관세기구가 만든 품목분류 코드입니다.<br>
+                  6단위는 세계 공통이며, 한국은 4자리를 추가한 10자리의 HSK 코드를 사용합니다.</li>
+               <li><span class="point"><b>MTI CODE</b></span>는 <span class="point">산업통상자원부가 무역동향 분석</span>을 위해 만든
+                  <span class="point">6단위</span>의 품목분류 코드입니다.<br>
+                  비슷한 종류의 HS 코드를 묶어 코드와 품목명을 부여한 분류 체계입니다.
+               </li>
+            </ul>
+         </div>
+      </div>
+      
+   </main>
+
+   <!-- Footer 프래그먼트 삽입 -->
+   <div th:replace="~{fragments/footer :: footerFragment}"></div>
+</body>
+
+</html>

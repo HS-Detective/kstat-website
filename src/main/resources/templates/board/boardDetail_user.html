@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <title>게시글 상세 (사용자용)</title>
+
+  <link rel="stylesheet" th:href="@{/css/boardDetail_user.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+  <link rel="stylesheet" th:href="@{/css/board.css}">
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <script th:src="@{/js/boardDetail_user.js}" defer></script>
+  <script th:src="@{/js/menuBar.js}" defer></script>
+
+</head>
+
+<body>
+  <!-- Header 프래그먼트 삽입 -->
+  <div th:replace="~{fragments/header :: headerFragment}"></div>
+
+  <!-- 게시글 상세 본문 영역 (사용자용) -->
+  <main class="board-details-main">
+    <div class="container">
+      <div class="title-wrapper">
+        <h1 class="page-title">게시글 보기</h1>
+      </div>
+
+      <div class="info-box">
+        <p>작성하신 글에 개인 정보, 광고성 정보, 타인의 명예를 훼손하는 내용 등이 포함된 경우에는 <br>
+           게시글이 삭제될 수 있습니다.<br>
+           더 나은 서비스를 위해 주신 의견은 소중히 반영하겠습니다.</p>
+      </div>
+
+      <div class="post-content-wrapper">
+        <div class="post-table">
+          <div class="table-row">
+            <div class="table-header">제목</div>
+            <div class="table-data" th:text="${board.boardTitle}">제목</div>
+          </div>
+          <div class="table-row">
+            <div class="table-header">작성자</div>
+            <div class="table-data" th:text="${board.maskedWriterName}">작성자</div>
+          </div>
+          <div class="table-row">
+            <div class="table-header">작성일</div>
+            <div class="table-data" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd')}">작성일</div>
+          </div>
+          <div class="table-row content-row">
+            <div class="table-header">글쓰기</div>
+            <div class="table-data content-body" th:text="${board.boardContent}">글 내용</div>
+          </div>
+          <div class="table-row">
+            <div class="table-header">첨부파일</div>
+            <div class="table-data" th:if="${board.originalFilename != null}">
+              <a th:href="@{/board/download(boardSeq=${board.boardSeq})}" download>
+              <i class="fa-solid fa-file-arrow-down"></i>
+              <span th:text="${board.originalFilename}"></span>
+           </a>
+            </div>
+            <div class="table-data" th:if="${board.originalFilename == null}">첨부된 파일 없음</div>
+          </div>
+        </div>
+        <!-- 로그인한 사용자(currentUser)와 글 작성자(board.author)가 일치할 때만 버튼 표시 -->
+      <div class="action-buttons" th:if="${currentUser == board.boardWriter}">
+          <a th:href="@{/board/boardUpdate(boardSeq=${board.boardSeq})}" class="btn btn-edit">수정</a>
+
+        <form id="deleteForm" th:action="@{/board/boardDelete}" method="get">
+          <input type="hidden" name="boardSeq" th:value="${board.boardSeq}">
+          <button type="button" id="btn-delete" class="btn btn-delete">삭제</button>
+      </form>
+      </div>
+      </div>
+
+     <!-- 답변 영역 -->
+     <table class="reply-table" th:if="${reply != null}">
+        <colgroup>
+         <col /> <!-- 내용 -->
+         <col style="width: 160px" /> <!-- 날짜 고정폭 -->
+        </colgroup>
+        <thead>
+         <tr>
+            <th>답변내용</th>
+            <th>답변날짜</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+            <td th:text="${reply.replyContent}">답변 내용</td>
+            <td th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd')}">답변날짜</td>
+         </tr>
+        </tbody>
+     </table>
+      
+      <div class="reply-empty" th:if="${reply == null}">
+        <p class="no-reply-text">아직 답변이 등록되지 않았습니다.</p>
+     </div>
+
+      <div class="bottom-actions">
+        <a th:href="@{/board/boardList}" class="btn btn-list">글목록</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer 프래그먼트 삽입 -->
+  <div th:replace="~{fragments/footer :: footerFragment}"></div>
+  
+</body>
+</html>

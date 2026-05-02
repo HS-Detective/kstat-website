@@ -1,0 +1,629 @@
+:root {
+  --primary-bg: #1b3c53;
+  --secondary-bg: #f6f7f9;
+  --text-light: #ffffff;
+  --text-dark: #000000;
+  --text-placeholder: rgba(0, 0, 0, 0.46);
+  --text-accent: #e97543;
+  --control-h: 44px; 
+  --border-color-dark: #ccc; 
+  --light-gray-bg: #f6f7f9
+}
+
+body {
+  margin: 0;
+  font-family: 'Noto Sans', sans-serif;
+  background-color: #ffffff;
+  color: var(--text-dark);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.container {
+  width: 100%;
+  max-width: 1480px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+/* CSS for section section:footer */
+.site-footer {
+  padding-top: 40px;
+  padding-bottom: 20px;
+  background-color: #ffffff;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 27px;
+}
+
+.footer-nav a {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: -0.35px;
+}
+
+.footer-credits {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.footer-logo img {
+  display: block;
+  width: 32px;
+  height: 70px;
+}
+
+.copyright-info {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-accent);
+  letter-spacing: -0.12px;
+}
+
+.rights-reserved {
+  margin: 0;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-accent);
+  letter-spacing: -0.12px;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    gap: 40px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-credits {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .rights-reserved {
+    margin-left: 0;
+  }
+}
+
+.submenu {
+  background-color: #f7f7f7;
+  padding: 40px 60px;
+  display: flex;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-in;
+  z-index: 1000;
+}
+
+.submenu-container {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.submenu-desc-area {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.submenu-columns {
+  flex: 3;
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.submenu h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.submenu-desc {
+  font-size: 13px;
+  color: #333;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.submenu-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #000;
+  cursor: default;
+}
+
+.submenu-columns ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.submenu-columns li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  cursor: pointer;
+}
+
+.submenu-columns a.submenu-title {
+  cursor: pointer;
+  color: #000;
+  text-decoration: none;
+}
+
+.submenu a:hover {
+   color:var(--text-accent);
+   font-weight: bold;
+}
+
+.submenu-column {
+   width: 150px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CSS for section section:header */
+.site-header {
+   background-color: var(--primary-bg);
+     height: 85px;
+     display: flex;
+     align-items: center;
+     position:sticky;
+   top: 0;
+   z-index: 100;
+   width: 100%;
+}
+
+.header-container {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   height: 85px;
+   max-width: 1480px;
+   margin: 0 auto;
+   padding: 0 40px;
+}
+
+.kstatIcon img {
+   display: block;
+   width: 189px;
+   height: 74px;
+}
+
+.main-navigation {
+   display: flex;
+   align-items: center;
+   gap: 70px;
+}
+
+.main-navigation a {
+   font-weight: 700;
+   font-size: 20px;
+   color: var(--text-light);
+   letter-spacing: -0.5px;
+}
+
+.loginBtn {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 96px;
+   height: 24px;
+   border: 2px solid var(--text-light);
+   border-radius: 15px;
+   font-weight: 300;
+   font-size: 14px;
+   color: var(--text-light);
+   letter-spacing: -0.35px;
+}
+
+.logoutBtn {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 96px;
+   height: 24px;
+   border: 2px solid var(--text-light);
+   border-radius: 15px;
+   font-weight: 300;
+   font-size: 14px;
+   color: var(--text-light);
+   letter-spacing: -0.35px;
+}
+    
+.menu-toggle {
+   display: none;
+   font-size: 28px;
+   background: none;
+   border: none;
+   color: white;
+   cursor: pointer;
+}
+
+@media (max-width: 992px) {
+  .submenu {
+    position: relative;
+    background-color: #f7f7f7;
+    margin-top: 10px;
+    padding: 24px;
+    z-index: 10;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .submenu-container {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .submenu-desc-area {
+    padding-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .submenu-desc {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  .submenu-columns {
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+
+  .submenu-column {
+    min-width: 100%;
+  }
+
+  .submenu-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .submenu-columns li {
+    font-size: 14px;
+    color: #1B3C53;
+    margin-left: 10px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .main-navigation {
+    display: none;
+    flex-direction: column;
+    background-color: #1B3C53;
+    position: absolute;
+    top: 85px;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+  }
+
+  .main-navigation.show {
+    display: flex;
+  }
+
+  .main-navigation a {
+    padding: 14px 24px;
+    font-size: 18px;
+    
+  }
+}
+
+@media (max-width: 1200px) {
+  .main-navigation {
+    gap: 30px;
+  }
+
+  .main-navigation a {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 992px) {
+  .main-navigation {
+    display: none;
+    /* Example: Hide for a hamburger menu */
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    justify-content: space-between;
+  }
+
+  .kstatIcon img {
+    width: 140px;
+    height: auto;
+  }
+}
+
+/* Trit 아이콘 */
+.trit-icon-wrapper {
+  position: fixed;
+  top: 550px;
+  left: 1380px;
+}
+
+.trit-icon-wrapper img {
+  width: 112px;
+  height: 112px;
+}
+
+@media (max-width: 992px) {
+  .trit-icon-wrapper {
+    display: none;
+  }
+}
+
+/* ===== Mobile mega menu (hamburger 하단 메뉴) ===== */
+@media (max-width: 992px) {
+   
+   .back-btn {
+   color: #fff;}
+   
+  .mobile-submenu {
+     width: 80%;
+    position: relative;
+    background-color: #f7f7f7;           /* 데스크탑 .submenu와 동일 */
+    padding: 24px;                        /* 데스크탑 모바일화 스타일과 동일한 여백 */
+    
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    animation: fadeIn 0.2s ease-in;       /* 동일한 등장 애니메이션 */
+    z-index: 998;                         /* 헤더 및 내비 위계와 충돌 방지 */
+   
+   max-height: calc(70vh - 56px);   /* 상단 타이틀/패딩 높이만큼 빼기 */
+   overflow-y: auto;                /* 세로 스크롤 활성화 */
+   -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
+   overscroll-behavior: contain;    /* 바닥에서 배경 스크롤 방지 */
+   padding-bottom: 20px; /* iOS 홈 인디케이터 여백 */
+   margin-bottom: 20px;
+  }
+
+  /* 상단 설명 영역 */
+  .mobile-submenu-desc {
+    margin-bottom: 20px;
+  }
+  .mobile-submenu-heading {
+    font-size: 20px;                      /* .submenu h2와 매칭 */
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #000;
+  }
+  .mobile-submenu-text {
+    font-size: 14px;                      /* 데스크탑의 .submenu-desc(13)보다 살짝 키워 가독성 확보 */
+    color: #333;
+    line-height: 1.6;
+  }
+
+  /* 컬럼 그룹 */
+  .mobile-submenu-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;                             /* 데스크탑 모바일화와 톤 맞춤 */
+  }
+
+  /* 각 섹션(=컬럼) */
+  .mobile-submenu-section {
+    padding-top: 12px;
+    
+  }
+
+  .mobile-submenu-title {
+    font-size: 16px;                       /* 데스크탑 @992 이하 .submenu-title와 동일 */
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #000;
+  }
+  
+  .mobile-submenu-title a{
+    font-size: 16px;                       /* 데스크탑 @992 이하 .submenu-title와 동일 */
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #000;
+   padding-left: 0px;
+  }
+
+  .mobile-submenu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mobile-submenu-list li {
+    font-size: 14px;                       /* 데스크탑 .submenu-columns li와 동일 */
+    line-height: 1.6;
+    color: #333;
+    margin-left: 10px;                     /* 데스크탑 모바일화와 동일한 인덴트 */
+  }
+  .mobile-submenu-list a {
+    color: #1B3C53;                        /* 사이트 프라이머리 컬러 */
+    text-decoration: none;
+    display: inline-block;
+    padding: 6px 0;                        /* 터치 타겟 보강 */
+  }
+  .mobile-submenu-list a:hover,
+  .mobile-submenu-list a:active {
+    text-decoration: underline;
+  }
+
+  /* 상단 내비 아이템과의 간격 */
+  .main-navigation.show + .mobile-submenu,
+  .mobile-submenu {
+    margin-top: 0;
+  }
+}
+
+/* CSS for section section:무역통계 한눈에 */
+/* 컨테이너가 grid일 때 select가 너무 좁아지지 않도록 최소폭 */
+#section-trade-insights .ui-select{
+  min-width: 140px;      
+}
+
+/* 무역통계 섹션의 입력들도 동일 높이/둥근 모서리 */
+#section-trade-insights input[type="text"]{
+  height: var(--control-h);
+  border: 1px solid var(--border-color-dark);
+  border-radius: 10px;
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+/* 차트 래퍼: 높이를 래퍼가 책임지게 하고 캔버스는 100% 채움 */
+.ti-chart{
+  position: relative;
+  width: 100%;
+  height: 320px;                     /* 기본 높이 */
+}
+@media (min-width: 1100px){
+  .ti-chart--lg{ height: 420px; }    /* 데스크톱에서 카드1 더 크게 */
+}
+.ti-chart canvas{
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.ti-chart--sq { aspect-ratio: 1 / 1; height: auto; }
+
+
+/* CSS for section section:floating-widget */
+.floating-chat-icon {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 112px;
+  height: 112px;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+.floating-chat-icon:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .floating-chat-icon {
+    width: 80px;
+    height: 80px;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+
+/* CSS for section section:footer */
+.site-footer {
+  padding-top: 40px;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 40px;
+  padding-right: 40px;  
+  padding-bottom: 40px;
+}
+.footer-top {
+  padding-bottom: 80px;
+}
+.footer-links {
+  margin-bottom: 40px;
+}
+.footer-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 27px;
+}
+.footer-links a {
+  color: #000;
+  font-size: 14px;
+  font-weight: 700;
+}
+.footer-credits {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.footer-credits-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.footer-logo {
+  height: 70px;
+  width: auto;
+}
+.copyright-text, .rights-text {
+  color: #e97543;
+  font-size: 12px;
+  font-weight: 400;
+}
+.footer-bottom-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer-bottom-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 27px;
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border-radius: 100px;
+  padding: 18px 24px;
+}
+.footer-bottom-nav a {
+  color: #000;
+  font-size: 14px;
+  font-weight: 700;
+}

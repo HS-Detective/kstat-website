@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <!-- th:fragment="footerFragment"를 사용하여 이 부분을 프래그먼트로 정의합니다. -->
+    <footer id="section-footer" class="site-footer" th:fragment="footerFragment">
+        <div class="container main">
+            <div class="footer-top">
+                <nav class="footer-links">
+                    <ul>
+                        <li><a href="#">한국 무역 협회</a></li>
+                        <li><a href="#">HS 탐정단</a></li>
+                    </ul>
+                </nav>
+                <div class="footer-credits">
+                    <div class="footer-credits-left">
+                        <img th:src="@{/images/footer_image.png}" alt="Area Logo">
+                        <p class="copyright-text">© Area. 2025</p>
+                    </div>
+                    <p class="rights-text">All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

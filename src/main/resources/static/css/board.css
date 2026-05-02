@@ -1,0 +1,80 @@
+/* ===== Board UI Unifier (no markup changes) ===== */
+
+/* 1) GNB 아래 상·하 여백 통일 */
+#board-content,                /* 목록 */
+.post-creation-section,        /* 등록/수정 */
+.board-details-main,         /* 상세(사용자) */
+#news-content {                /* news */
+  padding-top: 75px;
+  padding-bottom: 80px;
+}
+
+/* 2) 컨테이너 폭/패딩 통일 (각 페이지의 실제 래퍼 기준으로만 적용) */
+#board-content .content-container,     /* 목록 */
+.post-creation-section .container,     /* 등록/수정 */
+.board-details-main .container,         /* 상세(사용자) */
+#news-content .content-container {      /* news */
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+/* 3) 제목 + 밑줄 길이(190px) 통일 */
+/* 목록/등록은 wrapper에 밑줄, 상세는 h1 자체에 밑줄 — 둘 다 커버 */
+.page-title-wrapper {
+  width: 190px;
+  margin: 0 auto 25px;
+  padding-bottom: 19px;
+  border-bottom: 1px solid #000;
+  text-align: center;
+}
+.page-title-wrapper h1,
+.board-heading,
+.page-title,
+.news-heading {                 /* news */ 
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: -1.08px;
+}
+/* 상세(관리자/사용자)에서 h1.page-title에 직접 밑줄이 있었던 케이스도 통일 */
+.page-title {
+  width: 190px;
+  margin: 0 auto 25px;
+  padding-bottom: 19px;
+  border-bottom: 1px solid #000;
+}
+
+/* 4) 안내 박스 통일 (클래스명이 다른 두 종류 모두 반영) */
+.board-info-box,
+.info-box,
+.news-info-box {                /* news */
+  background: #f6f7f9;
+  padding: 25px 30px;
+  margin-bottom: 40px;
+  font-size: 18px;
+  line-height: 1.5;
+  border-radius: 4px;
+}
+
+/* 5) 본문 시작 상단 굵은선(2px) 통일 */
+/* 각 페이지가 쓰는 실제 블록들 대상으로만 */
+.post-form,                    /* 등록/수정 폼 상단 */
+.post-table,                   /* 상세 테이블 상단(관리자/사용자 공통 클래스명) */
+.board-table thead,            /* 목록 테이블 헤더 상단 */
+.news-table thead {            /* news */
+  border-top: 2px solid #333;
+}
+
+/* 모바일 */
+@media (max-width: 768px) {
+  #board-content .content-container,
+  .board-details-main .container,
+  .post-creation-section .container,
+  #news-content .content-container {
+    padding: 0 20px;
+  }
+}

@@ -1,0 +1,461 @@
+@charset "UTF-8";
+
+:root {
+  --color-text-dark: #000000;
+  --text-dark: #333;
+  --text-light: #fff;
+  --text-muted: #999;
+  --accent-red: #e74c3c;
+  --accent-blue: #2980b9;
+  --light-gray-bg: #f6f7f9;
+  --border-color-dark: #ccc;
+  --border-color-light: #eee;
+  --button-bg: #004085;
+  --control-h: 44px;          /* 공통 컨트롤 높이 */
+}
+
+/* 게시판 영역 */
+#board-content {
+  padding-top: 50px;
+  padding-bottom: 80px;
+}
+
+.content-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+@media (max-width: 768px) {
+  .content-container {
+    padding: 0 20px;
+  }
+}
+
+/* 제목 */
+.page-title-wrapper {
+  width: 190px;
+  margin: 0 auto 25px auto;
+  padding-bottom: 19px;
+  border-bottom: 1px solid var(--color-text-dark);
+}
+
+.board-heading {
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+}
+
+/* 제목 + 첨부아이콘 레이아웃 */
+.board-title { 
+  padding-left: 0; 
+  white-space: normal; 
+  overflow: visible; 
+  text-overflow: initial; 
+}
+
+.board-title .title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.board-title .title-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-left: 30px;      /* 기존 TD padding을 링크로 이동 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.attach-icon {
+  display: inline-flex;
+  align-items: center;
+  color: #64748b;
+}
+
+.attach-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* 아이콘이 텍스트 폭을 차지하지 않도록 절대배치 */
+.board-title .attach-icon{
+  position: absolute;
+  right: 8px;               /* 패딩 안쪽에 고정 */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px; height: 16px;
+  margin: 0;               /* 혹시 남아있는 여백 제거 */
+  pointer-events: none;
+  opacity: .9;
+}
+
+/* 혹시 이전에 준 여백 제거(있다면) */
+.board-title .attach-icon{ margin-left: 0 !important; }
+
+/* 아이콘 자리만큼 오른쪽 여백 확보 + 말줄임 유지 */
+.board-title a{
+  display: block;
+  padding-right: 26px;         /* 아이콘 충돌 방지 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 안내 박스 */
+.board-info-box {
+  background-color: var(--light-gray-bg);
+  padding: 25px 30px;
+  margin-bottom: 40px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* 컨트롤 영역 */
+.board-controls {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.board-stats {
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  gap: 20px;
+}
+
+.search-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap; /* 줄바꿈 방지 */
+}
+
+/* 드롭다운 */
+.dropdown-select {
+  position: relative;   
+  z-index: 30;
+  width: auto;          /* 내용에 맞춰 늘어나게 */
+  min-width: 130px;     /* 최소폭 확보(필요하면 140~160px로 조정) */
+  height: var(--control-h);
+  position: relative;
+  display: inline-block;
+  border: 1px solid var(--border-color-dark);
+  border-radius: 10px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  padding: 0 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  width: 100%;
+  height: var(--control-h);
+  white-space: nowrap;  /* 한 줄로 고정 */
+}
+
+.dropdown-toggle img{
+  flex-shrink: 0;       /* 아이콘이 눌려서 폭을 먹지 않게 */
+}
+
+.selected-option{
+  white-space: nowrap;              /* 선택된 텍스트 줄바꿈 금지 */
+  max-width: calc(100% - 18px);     /* 아이콘 자리 확보 */
+  overflow: hidden;
+  text-overflow: ellipsis;          /* 길어지면 … 처리 */
+}
+
+.dropdown-menu {
+  min-width: 100%;         /* 메뉴 폭도 버튼과 동일하게 */
+  position: absolute;
+  z-index: 9999; 
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid var(--border-color-dark);
+  border-radius: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+.dropdown-select.active .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdown-menu li:hover {
+  background-color: var(--light-gray-bg);
+}
+
+/* 검색창 */
+.search-input-wrapper input[type="text"] {
+  width: 200px;
+  height: var(--control-h);
+  line-height: var(--control-h);
+  padding: 0 14px;
+  border: 1px solid var(--border-color-dark);
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.search-input-wrapper input[type="text"]:focus {
+  border-color: var(--accent-blue);
+}
+
+.search-btn {
+  background-color: var(--primary-bg);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  width: 84px;
+  height: var(--control-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* 테이블 */
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 16px;
+  position: relative;
+  z-index: 1;
+  table-layout: fixed;   /* 열 너비 고정 → ellipsis가 안정적으로 동작 */
+}
+
+.board-table thead {
+  background-color: var(--light-gray-bg);
+  border-top: 1px solid var(--border-color-dark);
+  border-bottom: 1px solid var(--border-color-dark);
+}
+
+.board-table th,
+.board-table td {
+  padding: 18px 10px;
+}
+
+/* 제목 셀을 절대배치 기준으로 만들기 + 아이콘 자리 패딩 확보 */
+.board-table td.board-title{
+  position: relative;
+  padding-left: 30px; 
+}
+
+/* 테이블 칸 너비 조정 */
+.board-table th:nth-child(1), /* 번호 */
+.board-table td:nth-child(1) {
+  width: 7%;
+}
+
+.board-table th:nth-child(2), /* 제목 */
+.board-table td:nth-child(2) {
+  width: 40%;
+}
+
+.board-table th:nth-child(3), /* 작성자 */
+.board-table td:nth-child(3) {
+  width: 12%;
+}
+
+.board-table th:nth-child(4), /* 작성일 */
+.board-table td:nth-child(4) {
+  width: 16%;
+}
+
+.board-table th:nth-child(5), /* 진행현황 */
+.board-table td:nth-child(5) {
+  width: 15%;
+}
+
+.board-table th:nth-child(6), /* 조회수 */
+.board-table td:nth-child(6) {
+  width: 10%;
+}
+
+.board-title {
+  position: relative;
+  text-align: left;
+  padding-left: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.board-title a {
+  display: block;
+  padding-right: 26px;   /* 아이콘 공간 */
+  white-space: nowrap;   /* 줄바꿈 금지 */
+  overflow: hidden;      
+  text-overflow: ellipsis; /* … 처리 */
+}
+
+.board-title a:hover {
+  color: #3551a4;
+  text-decoration: underline;
+}
+
+/* 행 구분선 */
+.board-table tbody td {
+  border-bottom: 1px solid #E6E9EE;  
+}
+
+/* 맨 위 굵은 선(헤더의 위쪽) */
+.board-table thead {
+  border-top: 2px solid #333333;        
+}
+
+/* 행 hover 시 배경 살짝 */
+.board-table tbody tr:hover td {
+  background-color: #F8FAFD;
+}
+
+/* 상태 스타일 */
+.status-inprogress {
+  color: var(--accent-red);
+  font-weight: 600;
+}
+
+.status-complete {
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+/* 글쓰기 버튼 */
+.board-footer-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+}
+
+.write-post-btn {
+  background-color: var(--primary-bg);
+  color: #fff;
+  border-radius: 10px;
+  padding: 9px 30px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* 페이지네이션 */
+.pagination { position: relative; z-index: 1; }
+.pagination ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;       /* 줄바꿈 시에도 충돌 방지 */
+  gap: 8px;
+  margin-top: 50px;
+  padding: 0;
+  list-style: none;
+  line-height: 1;        /* 클릭 영역 어긋남 방지 */
+}
+
+.pagination li { flex: 0 0 auto; }
+
+/* 공통 링크/버튼 스타일 (숫자 + 아이콘) */
+.pagination a {
+  display: inline-flex;           /* 넉넉한 클릭 영역 */
+  align-items: center;
+  justify-content: center;
+  width: 36px;                  /* 고정폭: 숫자/아이콘 클릭 영역을 정확히 */
+  height: 36px;
+  padding: 0;                 /* 내부 여백으로 밀림 방지 */
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-dark, #1b3c53);
+  border: 1px solid transparent;
+  font-size: 16px;
+  font-weight: 500;
+  box-sizing: border-box;
+  position: relative;    /* z-index 적용 가능 */
+  z-index: 2;
+}
+
+.pagination a:hover {
+  border-color: #cbd5e1;
+}
+
+/* 현재 페이지 표시(접근성: aria-current="page") */
+.pagination a.active,
+.pagination a[aria-current="page"] {
+  font-weight: 700;
+  color: var(--color-accent-red, #CE1126);
+  text-decoration: underline;
+  pointer-events: none;           /* 현재 페이지는 클릭 비활성화 */
+}
+
+/* 첫/마지막에서 이전/다음 비활성화 */
+.pagination li.disabled a {
+  opacity: .35;
+  pointer-events: none;
+}
+
+/* 아이콘이 클릭을 가로채지 않도록 */
+.pagination svg,
+.pagination img {
+  display: block;
+  pointer-events: none;
+}
+
+/* 스크린리더 전용 텍스트 */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+/* SVG 아이콘 크기 통일 */
+.pagination a svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+/* 키보드 접근성: 포커스 링 */
+.pagination a:focus-visible {
+  outline: 2px solid var(--color-accent-navy, #141b71);
+  outline-offset: 2px;
+}
+
+/* 페이지네이션 위에 겹치지 않게 래퍼 z-index 초기화 */
+.content-container,
+.board-table,
+.board-footer-controls {
+  position: relative;
+  z-index: 0;
+}

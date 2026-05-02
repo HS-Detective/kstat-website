@@ -1,0 +1,4 @@
+// 단일 모듈 -> 패키지 구조로만 도메인 경계 추정 
+rootProject.name = 'project'
+
+// 멀티 모듈의 경우 include 사용해 모듈 표시
