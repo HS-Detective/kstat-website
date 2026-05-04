@@ -2,25 +2,24 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-   href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700&family=Inter:wght@400&display=swap"
-   rel="stylesheet">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700&family=Inter:wght@400&display=swap"
+      rel="stylesheet">
+   <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
+   <title>게시글 상세 (관리자용)</title>
 
-<title>게시글 상세 (관리자용)</title>
+   <link rel="stylesheet" th:href="@{/css/boardDetail_manager.css}">
+   <link rel="stylesheet" th:href="@{/css/global.css}">
 
-<link rel="stylesheet" th:href="@{/css/boardDetail_manager.css}">
-<link rel="stylesheet" th:href="@{/css/global.css}">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<link rel="stylesheet"
-   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<script th:src="@{/js/boardDetail_manager.js}" defer></script>
-<script th:src="@{/js/menuBar.js}" defer></script>
+   <script th:src="@{/js/boardDetail_manager.js}" defer></script>
+   <script th:src="@{/js/menuBar.js}" defer></script>
 
 </head>
 
@@ -52,32 +51,27 @@
             </div>
             <div class="table-row">
                <div class="table-label">작성일</div>
-               <div class="table-data"
-                  th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd')}"></div>
+               <div class="table-data" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd')}"></div>
             </div>
             <div class="table-row content-row">
                <div class="table-label">글쓰기</div>
-               <div class="table-data content-body"
-                  th:text="${board.boardContent}"></div>
+               <div class="table-data content-body" th:text="${board.boardContent}"></div>
             </div>
             <div class="table-row">
                <div class="table-label">첨부파일</div>
                <div class="table-data file-data">
                   <span th:if="${board.originalFilename == null}">첨부된 파일 없음</span> <a
-                     th:if="${board.originalFilename != null}"
-                     th:href="@{/board/download(boardSeq=${board.boardSeq})}"> <i
-                     class="fa-solid fa-file-arrow-down"></i> <span
-                     th:text="${board.originalFilename}"></span>
+                     th:if="${board.originalFilename != null}" th:href="@{/board/download(boardSeq=${board.boardSeq})}">
+                     <i class="fa-solid fa-file-arrow-down"></i> <span th:text="${board.originalFilename}"></span>
                   </a>
                </div>
             </div>
 
             <!-- 답변 등록 -->
-            <form class="reply-form" id="replyForm" th:if="${reply == null}"
-               th:action="@{/reply/insertReply}" method="post">
+            <form class="reply-form" id="replyForm" th:if="${reply == null}" th:action="@{/reply/insertReply}"
+               method="post">
                <input type="hidden" name="boardSeq" th:value="${board.boardSeq}">
-               <input type="text" id="replyContent" name="replyContent"
-                  placeholder="관리자의 답변 입력창입니다.">
+               <input type="text" id="replyContent" name="replyContent" placeholder="관리자의 답변 입력창입니다.">
                <button type="submit" class="submit-reply-btn">답변 등록</button>
             </form>
 
@@ -102,8 +96,7 @@
                   <tr class="reply-row">
                      <td class="content-cell" th:text="${reply.replyContent}">답변
                         내용</td>
-                     <td class="date-cell"
-                        th:text="${#temporals.format(reply.createDate,'yyyy-MM-dd')}"></td>
+                     <td class="date-cell" th:text="${#temporals.format(reply.createDate,'yyyy-MM-dd')}"></td>
                      <td class="actions-cell">
                         <button type="button" class="btn btn-edit edit-btn">수정</button>
                         <button type="button" class="btn btn-delete delete-btn">삭제</button>
@@ -116,8 +109,7 @@
             <div class="bottom-actions">
                <a th:href="@{/board/boardList}" class="list-btn">글목록</a>
                <div class="post-actions">
-                  <button type="button" class="delete-post-btn"
-                     th:attr="data-board-seq=${board.boardSeq}">글삭제</button>
+                  <button type="button" class="delete-post-btn" th:attr="data-board-seq=${board.boardSeq}">글삭제</button>
                </div>
             </div>
          </div>
@@ -130,4 +122,5 @@
    <!-- Footer 프래그먼트 -->
    <div th:replace="~{fragments/footer :: footerFragment}"></div>
 </body>
+
 </html>

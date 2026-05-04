@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
   <title>로그인</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +19,7 @@
 <body>
   <!-- Header 프래그먼트 삽입 -->
   <div th:replace="~{fragments/header :: headerFragment}"></div>
-  
+
   <main id="section-main" class="main-content">
     <div class="login-area">
       <form action="/user/loginProc" method="POST" class="login-form" id="login-form">
@@ -36,15 +37,15 @@
           <span class="separator-text">아직 회원이 아니신가요?</span>
           <hr class="line">
         </div>
-         <button type="button" class="sign-up" id="sign-up">회원가입</button>
+        <button type="button" class="sign-up" id="sign-up">회원가입</button>
       </form>
-      
+
     </div>
   </main>
-  
+
   <!-- Footer 프래그먼트 삽입 -->
   <div th:replace="~{fragments/footer :: footerFragment}"></div>
-  
+
 </body>
 
 </html>

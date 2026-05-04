@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -36,8 +36,8 @@
 
       <p class="news-info-box">
         최신 무역 뉴스를 한눈에 확인할 수 있는 공간입니다. <br>
-      네이버 뉴스 API를 활용해 국내외 무역과 관련된 실시간 뉴스를 자동으로 수집하고 있습니다. <br>
-      관심 있는 이슈나 정책, 시장 동향 등 다양한 무역 정보를 빠르게 받아보세요.
+        네이버 뉴스 API를 활용해 국내외 무역과 관련된 실시간 뉴스를 자동으로 수집하고 있습니다. <br>
+        관심 있는 이슈나 정책, 시장 동향 등 다양한 무역 정보를 빠르게 받아보세요.
       </p>
 
       <div class="news-controls">
@@ -62,8 +62,7 @@
           </div>
 
           <div class="search-input-wrapper">
-            <input type="text" name="searchKeyword" placeholder="검색어 입력"
-                   th:data-value="${searchKeyword}">
+            <input type="text" name="searchKeyword" placeholder="검색어 입력" th:data-value="${searchKeyword}">
           </div>
           <button class="search-btn" type="submit">
             <span>검색</span>
@@ -102,63 +101,67 @@
 
             <!-- 만약 뉴스 데이터가 하나도 없을 경우 보여줄 메시지 -->
             <tr th:if="${#lists.isEmpty(newsList)}">
-                <td colspan="3" style="text-align: center;">등록된 뉴스가 없습니다.</td>
+              <td colspan="3" style="text-align: center;">등록된 뉴스가 없습니다.</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <!-- Thymeleaf 방식에서는 데이터를 가져오는 script 태그가 필요 없습니다. -->      
-      
-        <!-- 페이지네이션: 그룹 표시 (navi 사용 / 안전 가드 포함) -->
-   <nav class="pagination"
+      <!-- Thymeleaf 방식에서는 데이터를 가져오는 script 태그가 필요 없습니다. -->
+
+      <!-- 페이지네이션: 그룹 표시 (navi 사용 / 안전 가드 포함) -->
+      <nav class="pagination"
         th:if="${totalPages > 1 and navi != null and navi.startPageGroup >= 1 and navi.endPageGroup >= navi.startPageGroup}">
-     <ul>
-       <!-- 처음 / 이전 -->
-       <li th:classappend="${currentPage == 1} ? 'disabled'">
-         <a th:if="${currentPage > 1}"
-            aria-label="첫 페이지"
-            th:href="@{/news/newsList(page=1, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
-           <!-- 왼쪽 이중 화살표 SVG -->
-           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19l-7-7 7-7v14zm9 0l-7-7 7-7v14z"/></svg>
-         </a>
-       </li>
-       <li th:classappend="${currentPage == 1} ? 'disabled'">
-         <a th:if="${currentPage > 1}"
-            aria-label="이전 페이지"
-            th:href="@{/news/newsList(page=${currentPage - 1}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
-           <!-- 왼쪽 한 칸 화살표 SVG -->
-           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19l-7-7 7-7v14z"/></svg>
-         </a>
-       </li>
-   
-       <!-- 그룹 숫자 -->
-       <li th:each="p : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-         <a th:text="${p}"
-            th:href="@{/news/newsList(page=${p}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}"
-            th:classappend="${p == currentPage} ? 'active' : ''"
-            th:attr="aria-current=${p == currentPage} ? 'page' : null"></a>
-       </li>
-   
-       <!-- 다음 / 마지막 -->
-       <li th:classappend="${currentPage == totalPages} ? 'disabled'">
-         <a th:if="${currentPage < totalPages}"
-            aria-label="다음 페이지"
-            th:href="@{/news/newsList(page=${currentPage + 1}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
-           <!-- 오른쪽 한 칸 화살표 SVG -->
-           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7V5z"/></svg>
-         </a>
-       </li>
-       <li th:classappend="${currentPage == totalPages} ? 'disabled'">
-         <a th:if="${currentPage < totalPages}"
-            aria-label="마지막 페이지"
-            th:href="@{/news/newsList(page=${totalPages}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
-           <!-- 오른쪽 이중 화살표 SVG -->
-           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5l7 7-7 7V5zm9 0l7 7-7 7V5z"/></svg>
-         </a>
-       </li>
-     </ul>
-   </nav>
-      
+        <ul>
+          <!-- 처음 / 이전 -->
+          <li th:classappend="${currentPage == 1} ? 'disabled'">
+            <a th:if="${currentPage > 1}" aria-label="첫 페이지"
+              th:href="@{/news/newsList(page=1, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
+              <!-- 왼쪽 이중 화살표 SVG -->
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M11 19l-7-7 7-7v14zm9 0l-7-7 7-7v14z" />
+              </svg>
+            </a>
+          </li>
+          <li th:classappend="${currentPage == 1} ? 'disabled'">
+            <a th:if="${currentPage > 1}" aria-label="이전 페이지"
+              th:href="@{/news/newsList(page=${currentPage - 1}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
+              <!-- 왼쪽 한 칸 화살표 SVG -->
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15 19l-7-7 7-7v14z" />
+              </svg>
+            </a>
+          </li>
+
+          <!-- 그룹 숫자 -->
+          <li th:each="p : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+            <a th:text="${p}"
+              th:href="@{/news/newsList(page=${p}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}"
+              th:classappend="${p == currentPage} ? 'active' : ''"
+              th:attr="aria-current=${p == currentPage} ? 'page' : null"></a>
+          </li>
+
+          <!-- 다음 / 마지막 -->
+          <li th:classappend="${currentPage == totalPages} ? 'disabled'">
+            <a th:if="${currentPage < totalPages}" aria-label="다음 페이지"
+              th:href="@{/news/newsList(page=${currentPage + 1}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
+              <!-- 오른쪽 한 칸 화살표 SVG -->
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 5l7 7-7 7V5z" />
+              </svg>
+            </a>
+          </li>
+          <li th:classappend="${currentPage == totalPages} ? 'disabled'">
+            <a th:if="${currentPage < totalPages}" aria-label="마지막 페이지"
+              th:href="@{/news/newsList(page=${totalPages}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
+              <!-- 오른쪽 이중 화살표 SVG -->
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 5l7 7-7 7V5zm9 0l7 7-7 7V5z" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
     </div>
   </section>
 
@@ -166,4 +169,5 @@
   <div th:replace="~{fragments/footer :: footerFragment}"></div>
 
 </body>
+
 </html>

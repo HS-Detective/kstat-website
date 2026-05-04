@@ -48,7 +48,7 @@ public class ChatApiController {
             case "nav":      targetUrl = fastApiBase + "/nav"; break;
             case "glossary": targetUrl = fastApiBase + "/glossary"; break;
             case "faq":      targetUrl = fastApiBase + "/faq"; break;
-            case "stats":    targetUrl = n8nBase + "/webhook/trade_stats"; callN8n = true; break; // 언더스코어!
+            case "stats":    targetUrl = fastApiBase + "/chat/stats"; break; 
             default:         return Map.of("reply", "알 수 없는 모드입니다.");
         }
 

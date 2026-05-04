@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -44,11 +44,12 @@
         <div class="board-stats">
           <span>Total : <span th:text="${totalCount}">0</span></span>
           <span>Page :
-           <span th:text="${(currentPage != null and totalPages != null) ? (currentPage > totalPages ? totalPages : (currentPage < 1 ? 1 : currentPage)) : 1}">1</span>
-           /
-           <span th:text="${totalPages != null ? (totalPages < 1 ? 1 : totalPages) : 1}">1</span>
-        </span>
-          
+            <span
+              th:text="${(currentPage != null and totalPages != null) ? (currentPage > totalPages ? totalPages : (currentPage < 1 ? 1 : currentPage)) : 1}">1</span>
+            /
+            <span th:text="${totalPages != null ? (totalPages < 1 ? 1 : totalPages) : 1}">1</span>
+          </span>
+
         </div>
 
         <!-- 검색 영역 -->
@@ -69,8 +70,7 @@
           </div>
 
           <div class="search-input-wrapper">
-            <input type="text" name="searchKeyword" placeholder="검색어 입력"
-                   th:data-value="${searchKeyword}">
+            <input type="text" name="searchKeyword" placeholder="검색어 입력" th:data-value="${searchKeyword}">
           </div>
           <button class="search-btn" type="submit">
             <span>검색</span>
@@ -97,28 +97,27 @@
               <!-- 번호 역순 -->
               <td th:text="${totalCount - (pageSize * (currentPage - 1)) - stat.index}"></td>
               <td class="board-title" th:with="hasAtt=${board.originalFilename != null}">
-              <span class="attach-icon" th:if="${hasAtt}" title="첨부파일 있음" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
-                     width="16" height="16">
-                  <path d="M21.44 11.05l-8.49 8.49a5.5 5.5 0 01-7.78-7.78l8.49-8.49a3.5 3.5 0 114.95 4.95l-8.49 8.49a1.5 1.5 0 01-2.12-2.12l7.78-7.78"/>
-                </svg>
-                <span class="sr-only">첨부파일 있음</span>
-              </span>
-            
-              <a th:href="@{/board/boardDetail(boardSeq=${board.boardSeq},
-                                               searchCategory=${searchCategory},
-                                               searchKeyword=${searchKeyword})}"
-                 th:text="${board.boardTitle}"></a>
-            </td>
+                <span class="attach-icon" th:if="${hasAtt}" title="첨부파일 있음" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round" width="16" height="16">
+                    <path
+                      d="M21.44 11.05l-8.49 8.49a5.5 5.5 0 01-7.78-7.78l8.49-8.49a3.5 3.5 0 114.95 4.95l-8.49 8.49a1.5 1.5 0 01-2.12-2.12l7.78-7.78" />
+                  </svg>
+                  <span class="sr-only">첨부파일 있음</span>
+                </span>
 
-              
+                <a th:href="@{/board/boardDetail(boardSeq=${board.boardSeq},
+                                               searchCategory=${searchCategory},
+                                               searchKeyword=${searchKeyword})}" th:text="${board.boardTitle}"></a>
+              </td>
+
+
               <td th:text="${board.maskedWriterName}"></td>
               <td th:text="${board.createDate != null ? #temporals.format(board.createDate, 'yyyy-MM-dd') : ''}"></td>
               <td>
                 <span th:text="${#strings.trim(board.boardStatus) == '답변완료' ? '답변완료' : '진행중'}"
-                    th:classappend="${#strings.trim(board.boardStatus) == '답변완료'} ? 'status-complete' : 'status-inprogress'">
-            </span>
+                  th:classappend="${#strings.trim(board.boardStatus) == '답변완료'} ? 'status-complete' : 'status-inprogress'">
+                </span>
               </td>
               <td th:text="${board.hitCount}"></td>
             </tr>
@@ -130,56 +129,60 @@
         <button type="button" class="write-post-btn" id="btn-write">글쓰기</button>
       </div>
 
-   <!-- 페이지네이션: 그룹 표시 (navi 사용 / 안전 가드 포함) -->
-   <nav class="pagination"
+      <!-- 페이지네이션: 그룹 표시 (navi 사용 / 안전 가드 포함) -->
+      <nav class="pagination"
         th:if="${totalPages > 1 and navi != null and navi.startPageGroup >= 1 and navi.endPageGroup >= navi.startPageGroup}">
-     <ul>
-       <!-- 처음 / 이전 -->
-       <li th:classappend="${currentPage == 1} ? 'disabled'">
-         <a th:if="${currentPage > 1}"
-            aria-label="첫 페이지"
-            th:href="@{/board/boardList(page=1, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
-           <!-- 왼쪽 이중 화살표 SVG -->
-           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19l-7-7 7-7v14zm9 0l-7-7 7-7v14z"/></svg>
-         </a>
-       </li>
-       <li th:classappend="${currentPage == 1} ? 'disabled'">
-         <a th:if="${currentPage > 1}"
-            aria-label="이전 페이지"
-            th:href="@{/board/boardList(page=${currentPage - 1}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
-           <!-- 왼쪽 한 칸 화살표 SVG -->
-           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19l-7-7 7-7v14z"/></svg>
-         </a>
-       </li>
-   
-       <!-- 그룹 숫자 -->
-       <li th:each="p : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-         <a th:text="${p}"
-            th:href="@{/board/boardList(page=${p}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}"
-            th:classappend="${p == currentPage} ? 'active' : ''"
-            th:attr="aria-current=${p == currentPage} ? 'page' : null"></a>
-       </li>
-   
-       <!-- 다음 / 마지막 -->
-       <li th:classappend="${currentPage == totalPages} ? 'disabled'">
-         <a th:if="${currentPage < totalPages}"
-            aria-label="다음 페이지"
-            th:href="@{/board/boardList(page=${currentPage + 1}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
-           <!-- 오른쪽 한 칸 화살표 SVG -->
-           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7V5z"/></svg>
-         </a>
-       </li>
-       <li th:classappend="${currentPage == totalPages} ? 'disabled'">
-         <a th:if="${currentPage < totalPages}"
-            aria-label="마지막 페이지"
-            th:href="@{/board/boardList(page=${totalPages}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
-           <!-- 오른쪽 이중 화살표 SVG -->
-           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5l7 7-7 7V5zm9 0l7 7-7 7V5z"/></svg>
-         </a>
-       </li>
-     </ul>
-   </nav>
-     
+        <ul>
+          <!-- 처음 / 이전 -->
+          <li th:classappend="${currentPage == 1} ? 'disabled'">
+            <a th:if="${currentPage > 1}" aria-label="첫 페이지"
+              th:href="@{/board/boardList(page=1, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
+              <!-- 왼쪽 이중 화살표 SVG -->
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M11 19l-7-7 7-7v14zm9 0l-7-7 7-7v14z" />
+              </svg>
+            </a>
+          </li>
+          <li th:classappend="${currentPage == 1} ? 'disabled'">
+            <a th:if="${currentPage > 1}" aria-label="이전 페이지"
+              th:href="@{/board/boardList(page=${currentPage - 1}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
+              <!-- 왼쪽 한 칸 화살표 SVG -->
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15 19l-7-7 7-7v14z" />
+              </svg>
+            </a>
+          </li>
+
+          <!-- 그룹 숫자 -->
+          <li th:each="p : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+            <a th:text="${p}"
+              th:href="@{/board/boardList(page=${p}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}"
+              th:classappend="${p == currentPage} ? 'active' : ''"
+              th:attr="aria-current=${p == currentPage} ? 'page' : null"></a>
+          </li>
+
+          <!-- 다음 / 마지막 -->
+          <li th:classappend="${currentPage == totalPages} ? 'disabled'">
+            <a th:if="${currentPage < totalPages}" aria-label="다음 페이지"
+              th:href="@{/board/boardList(page=${currentPage + 1}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
+              <!-- 오른쪽 한 칸 화살표 SVG -->
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 5l7 7-7 7V5z" />
+              </svg>
+            </a>
+          </li>
+          <li th:classappend="${currentPage == totalPages} ? 'disabled'">
+            <a th:if="${currentPage < totalPages}" aria-label="마지막 페이지"
+              th:href="@{/board/boardList(page=${totalPages}, searchCategory=${searchCategory}, searchKeyword=${searchKeyword})}">
+              <!-- 오른쪽 이중 화살표 SVG -->
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 5l7 7-7 7V5zm9 0l7 7-7 7V5z" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
     </div>
   </section>
 
@@ -187,4 +190,5 @@
   <div th:replace="~{fragments/footer :: footerFragment}"></div>
 
 </body>
+
 </html>

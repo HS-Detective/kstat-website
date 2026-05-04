@@ -73,7 +73,10 @@
       [t1.mti4, t2.mti4].forEach(sel=>{
         if(!sel) return;
         sel.innerHTML = `<option value="ALL">ALL (전체)</option>` +
-          mti4.map(x=>`<option value="${x.code}">${x.label} (${x.code})</option>`).join('');
+          mti4.map(x=>{
+            const displayText = x.label ? `${x.label} (${x.code})` : x.code;
+            return `<option value="${x.code}">${displayText}</option>`;
+          }).join('');
         sel.value = 'ALL';
       });
     }catch(e){ console.warn('[옵션 로드 실패]', e); }

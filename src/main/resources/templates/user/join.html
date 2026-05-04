@@ -4,6 +4,7 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
    <title>회원가입</title>
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +18,7 @@
 
 <body>
    <!-- Header 프래그먼트 삽입 -->
-    <div th:replace="~{fragments/header :: headerFragment}"></div>
+   <div th:replace="~{fragments/header :: headerFragment}"></div>
 
    <main id="section-main" class="main-content">
       <div class="join-area">
@@ -50,12 +51,12 @@
 
             <button type="button" class="joinBtn" id="joinBtn">회원가입</button>
          </form>
-         
+
       </div>
    </main>
 
    <!-- Footer 프래그먼트 삽입 -->
-    <div th:replace="~{fragments/footer :: footerFragment}"></div>
+   <div th:replace="~{fragments/footer :: footerFragment}"></div>
 </body>
 
 </html>

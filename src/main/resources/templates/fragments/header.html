@@ -52,8 +52,10 @@
             <div id="chatbot-drag-header"
                 style="height: 40px; background-color: #2f6393; cursor: move; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative;">
                 TRIT Chatbot
-                <button id="chatbot-close-btn" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
-                <button id="chatbot-home-btn" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: white; font-size: 20px; cursor: pointer;">&lt;</button>
+                <button id="chatbot-close-btn"
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
+                <button id="chatbot-home-btn"
+                    style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: white; font-size: 20px; cursor: pointer;">&lt;</button>
             </div>
             <iframe id="chatbot-iframe" th:src="@{/chat}" style="width: 100%; height: 100%; border: none;"></iframe>
         </div>

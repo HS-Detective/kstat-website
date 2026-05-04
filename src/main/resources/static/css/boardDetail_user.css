@@ -171,7 +171,7 @@ a {
 
 .action-buttons .btn-edit,
 .action-buttons .btn-delete {
-  width: 60px;
+  /* width: 60px; */
   height: 32px;
   border-radius: 8px;
   font-size: 14px;
@@ -186,7 +186,7 @@ table.reply-table {
   border-collapse: collapse;
   background-color: #fefefe;
 
-/* 외곽선 + 위쪽 굵은 선 */
+  /* 외곽선 + 위쪽 굵은 선 */
   border: 1px solid var(--color-border-light);
   border-top: 2px solid var(--color-border-dark);
 }
@@ -195,7 +195,7 @@ table.reply-table {
 .reply-table thead th {
   background: var(--color-background-grey);
   color: var(--color-text-dark);
-  text-align: center;   
+  text-align: center;
   font-weight: 700;
   padding: 14px 16px;
   border: 1px solid var(--color-border-light);
@@ -221,11 +221,14 @@ table.reply-table {
 .reply-table tbody td:nth-child(2) {
   text-align: center;
   white-space: nowrap;
-  width: 160px; /* 필요하면 조절 */
+  width: 160px;
+  /* 필요하면 조절 */
 }
 
 /* utext 내부 p 여백 제거 */
-.reply-table td p { margin: 0; }
+.reply-table td p {
+  margin: 0;
+}
 
 /* 본문(글쓰기) 줄바꿈 유지 */
 .content-row .table-data,
@@ -237,7 +240,7 @@ table.reply-table {
 /* 답변 표 – 내용 셀 줄바꿈 유지 */
 .reply-table td:first-child,
 .reply-table .content-cell {
-  white-space: pre-wrap; 
+  white-space: pre-wrap;
   word-break: break-word;
 }
 
