@@ -53,22 +53,23 @@ public class BoardController {
     public String boardList(
             @AuthenticationPrincipal LoginUserDetails loginUser,
             @PageableDefault(page = 1) Pageable pageable, // 뷰/쿼리스트링은 1부터
-            @RequestParam(name="searchCategory", defaultValue = "boardTitle") String searchCategory,
-            @RequestParam(name="searchKeyword", defaultValue = "") String searchKeyword,
+            @RequestParam(name = "searchCategory", defaultValue = "boardTitle") String searchCategory,
+            @RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword,
             Model model) {
 
-        // 뷰(1-based) → 내부(0-based)
-        int requested = pageable.getPageNumber();          // 1,2,3...
-        int pageIndex = Math.max(0, requested - 1);        // 0,1,2...
-        int size = pageLimit;                              // 고정 사이즈(설정값)
+        // 뷰(1-based) -> 내부(0-based)
+        int requested = pageable.getPageNumber(); // 1,2,3...
+        int pageIndex = Math.max(0, requested - 1); // 0,1,2...
+        int size = pageLimit; // 고정 사이즈(설정값)
         Pageable pr = PageRequest.of(pageIndex, size, Sort.by(Sort.Direction.DESC, "boardSeq"));
 
         Page<BoardDTO> list = service.selectAll(pr, searchCategory, searchKeyword);
 
-        int totalPages  = list.getTotalPages();
-        int currentPage = pageIndex + 1;                   // 다시 1-based로 뷰에 노출
+        int totalPages = list.getTotalPages();
+        int currentPage = pageIndex + 1; // 다시 1-based로 뷰에 노출
 
-        if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+        if (currentPage > totalPages && totalPages > 0)
+            currentPage = totalPages;
 
         // PageNavigator는 1-based currentPage를 받도록 수정됨
         PageNavigator navi = new PageNavigator(currentPage, totalPages);
@@ -95,8 +96,8 @@ public class BoardController {
         model.addAttribute("isEdit", false);
         model.addAttribute("board", new BoardDTO()); // 빈 객체
         if (loginUser != null) {
-            model.addAttribute("loginName", loginUser.getUserName());        // 실명
-            model.addAttribute("loginId", loginUser.getUsername());          // 아이디
+            model.addAttribute("loginName", loginUser.getUserName()); // 실명
+            model.addAttribute("loginId", loginUser.getUsername()); // 아이디
             model.addAttribute("maskedWriterName", Masking.maskUserName(loginUser.getUserName()));
             model.addAttribute("boardWriter", loginUser.getUsername());
         }
@@ -114,10 +115,10 @@ public class BoardController {
     // 글 상세 + 조회수 증가
     @GetMapping("/boardDetail")
     public String boardDetail(@AuthenticationPrincipal LoginUserDetails loginUser,
-                              @RequestParam(name = "boardSeq") Long boardSeq,
-                              @RequestParam(name = "searchCategory", defaultValue = "boardTitle") String searchCategory,
-                              @RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword,
-                              Model model) {
+            @RequestParam(name = "boardSeq") Long boardSeq,
+            @RequestParam(name = "searchCategory", defaultValue = "boardTitle") String searchCategory,
+            @RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword,
+            Model model) {
 
         BoardDTO boardDTO = service.selectOne(boardSeq);
         service.incrementHitcount(boardSeq);
@@ -143,16 +144,17 @@ public class BoardController {
     // 글 삭제
     @GetMapping("/boardDelete")
     public String boardDelete(@AuthenticationPrincipal LoginUserDetails loginUser,
-                              @RequestParam(name="boardSeq") Long boardSeq,
-                              @RequestParam(name="searchCategory", defaultValue = "boardTitle") String searchCategory,
-                              @RequestParam(name="searchKeyword", defaultValue = "") String searchKeyword,
-                              RedirectAttributes rttr) {
+            @RequestParam(name = "boardSeq") Long boardSeq,
+            @RequestParam(name = "searchCategory", defaultValue = "boardTitle") String searchCategory,
+            @RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword,
+            RedirectAttributes rttr) {
 
-        if (loginUser == null) return "redirect:/user/login";
+        if (loginUser == null)
+            return "redirect:/user/login";
 
         BoardDTO board = service.selectOne(boardSeq);
 
-        boolean isAuthor  = loginUser.getUsername().equals(board.getBoardWriter());
+        boolean isAuthor = loginUser.getUsername().equals(board.getBoardWriter());
         boolean isManager = "ROLE_MANAGER".equals(loginUser.getRole());
 
         if (!(isAuthor || isManager)) {
@@ -168,10 +170,10 @@ public class BoardController {
     // 글 수정 조회
     @GetMapping("/boardUpdate")
     public String boardUpdate(@AuthenticationPrincipal LoginUserDetails loginUser,
-                              @RequestParam(name="boardSeq") Long boardSeq,
-                              @RequestParam(name="searchCategory", defaultValue = "boardTitle") String searchCategory,
-                              @RequestParam(name="searchKeyword", defaultValue = "") String searchKeyword,
-                              Model model) {
+            @RequestParam(name = "boardSeq") Long boardSeq,
+            @RequestParam(name = "searchCategory", defaultValue = "boardTitle") String searchCategory,
+            @RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword,
+            Model model) {
 
         BoardDTO boardDTO = service.selectOne(boardSeq);
         if (loginUser != null) {
@@ -180,10 +182,10 @@ public class BoardController {
 
         model.addAttribute("isEdit", true);
         model.addAttribute("board", boardDTO);
-        
+
         model.addAttribute("maskedWriterName", boardDTO.getMaskedWriterName()); // 마스킹 이름
-        model.addAttribute("boardWriter", boardDTO.getBoardWriter());           // 아이디(히든필드 등)
-        
+        model.addAttribute("boardWriter", boardDTO.getBoardWriter()); // 아이디(히든필드 등)
+
         model.addAttribute("searchCategory", searchCategory);
         model.addAttribute("searchKeyword", searchKeyword);
 
@@ -193,9 +195,9 @@ public class BoardController {
     // 글 수정
     @PostMapping("/boardUpdate")
     public String boardUpdate(@ModelAttribute BoardDTO boardDTO,
-                              @RequestParam(name="searchCategory", defaultValue = "boardTitle") String searchCategory,
-                              @RequestParam(name="searchKeyword", defaultValue = "") String searchKeyword,
-                              RedirectAttributes rttr) {
+            @RequestParam(name = "searchCategory", defaultValue = "boardTitle") String searchCategory,
+            @RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword,
+            RedirectAttributes rttr) {
 
         service.updateBoard(boardDTO);
         rttr.addAttribute("searchCategory", searchCategory);
@@ -205,8 +207,8 @@ public class BoardController {
 
     // 첨부파일 다운로드
     @GetMapping("/download")
-    public String download(@RequestParam(name="boardSeq") Long boardSeq,
-                           HttpServletResponse response) {
+    public String download(@RequestParam(name = "boardSeq") Long boardSeq,
+            HttpServletResponse response) {
 
         BoardDTO boardDTO = service.selectOne(boardSeq);
         String originalFilename = boardDTO.getOriginalFilename();
@@ -221,7 +223,7 @@ public class BoardController {
 
         String fullPath = uploadPath + "/" + savedFileName;
         try (FileInputStream filein = new FileInputStream(fullPath);
-             ServletOutputStream fileout = response.getOutputStream()) {
+                ServletOutputStream fileout = response.getOutputStream()) {
             FileCopyUtils.copy(filein, fileout);
         } catch (Exception e) {
             e.printStackTrace();
