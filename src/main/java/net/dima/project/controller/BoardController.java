@@ -214,12 +214,8 @@ public class BoardController {
         String originalFilename = boardDTO.getOriginalFilename();
         String savedFileName = boardDTO.getSavedFilename();
 
-        try {
-            String tempName = URLEncoder.encode(originalFilename, StandardCharsets.UTF_8.toString());
-            response.setHeader("Content-Disposition", "attachment;filename=" + tempName);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        String tempName = URLEncoder.encode(originalFilename, StandardCharsets.UTF_8);
+        response.setHeader("Content-Disposition", "attachment;filename=" + tempName);
 
         String fullPath = uploadPath + "/" + savedFileName;
         try (FileInputStream filein = new FileInputStream(fullPath);
