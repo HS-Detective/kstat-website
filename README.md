@@ -1,34 +1,34 @@
-# Trit - AI 기반 무역 인사이트 및 챗봇 웹 서비스 🌐
+# Trit - AI 기반 무역 인사이트 및 챗봇 웹 서비스 
 
 ![Trit Logo](src/main/resources/static/images/Trit_logo.png)
 
-## 📌 프로젝트 개요
+## 프로젝트 개요
 **Trit**는 사용자에게 무역 관련 최신 뉴스, 통계 데이터를 제공하고, AI 챗봇(Trit)을 통해 무역 및 수출입 관련 질문에 실시간으로 답변해 주는 웹 서비스 플랫폼입니다. 
 본 레포지토리는 서비스의 백엔드와 프론트엔드를 구성하는 **Java/Spring Boot 웹 애플리케이션** 파트를 담고 있습니다. (AI 챗봇 처리 및 예측 모델링을 담당하는 Python/FastAPI 서버는 별도로 운영됩니다.)
 
-## 🚀 주요 기능
+## 주요 기능
 
-### 1. 🤖 AI 무역 챗봇 'Trit' 연동
+### 1. AI 무역 챗봇 'Trit' 연동
 - FastAPI 기반의 AI 서버 및 n8n 워크플로우와 연동하여 무역 관련 질의응답 서비스 제공
 - 인터랙티브한 채팅 UI 지원 (웹소켓 및 REST API 활용)
 
-### 2. 📰 무역 뉴스 및 인사이트 제공
+### 2. 무역 뉴스 및 인사이트 제공
 - 최신 무역/경제 뉴스 리스트 제공
 - 메인 화면에 최신 뉴스 하이라이트 노출
 
-### 3. 📝 커뮤니티 게시판 (Board)
+### 3. 커뮤니티 게시판 (Board)
 - **일반 사용자 & 관리자 분리:** 권한에 따른 조회 및 관리 UI 차별화 (`boardDetail_user.html`, `boardDetail_manager.html`)
 - **게시글 CRUD:** 작성, 수정, 삭제, 조회
 - **파일 업로드:** 최대 100MB 대용량 첨부파일 지원
 - **댓글 기능:** 게시글 내 댓글 작성 및 소통 가능
 - **페이징 처리:** 대량의 게시글을 페이지네이션으로 깔끔하게 제공
 
-### 4. 🔐 사용자 인증 및 보안 (User/Auth)
+### 4. 사용자 인증 및 보안 (User/Auth)
 - **Spring Security** 기반의 강력한 보안 및 세션 관리
 - 회원가입, 로그인, 로그아웃 기능 지원
 - Custom Login Success/Failure Handler를 통한 세밀한 로그인 흐름 제어
 
-## 🛠 기술 스택 (Tech Stack)
+## 기술 스택 (Tech Stack)
 
 ### Backend
 - **Language:** Java 21
@@ -48,7 +48,7 @@
 - **Workflow Automation:** n8n
 - **Cloud Database:** Supabase
 
-## 📁 프로젝트 폴더 구조
+## 프로젝트 폴더 구조
 
 ```text
 C:\diane\web\
@@ -71,7 +71,7 @@ C:\diane\web\
 └── 기타 설정 파일 (.gitignore, gradle wrapper 등)
 ```
 
-## ⚙️ 설정 및 실행 방법
+## 설정 및 실행 방법
 
 ### 1. 필수 환경 변수 설정
 프로젝트 최상단(root)에 `.env` 파일을 생성하고 아래의 변수들을 환경에 맞게 기입해주세요. (Spring Boot의 `spring.config.import=optional:file:.env` 기능을 통해 로드됩니다.)
@@ -102,5 +102,5 @@ SUPABASE_SERVICE_KEY=your_supabase_key
 java -jar build/libs/project-0.0.1-SNAPSHOT.jar
 ```
 
-## 🤝 연동 아키텍처 참고
+## 연동 아키텍처 참고
 이 애플리케이션은 메인 백엔드 역할을 담당합니다. 챗봇 기능(`ChatApiController.java` 및 `trit.html`)은 설정된 `FASTAPI_BASE_URL` (포트 8001) 및 `n8n` 서버로 데이터를 비동기 통신하여 AI 응답을 받아와 사용자 화면에 렌더링하도록 설계되어 있습니다. 파이썬 서버가 실행 중이어야 챗봇 기능이 정상 작동합니다.
