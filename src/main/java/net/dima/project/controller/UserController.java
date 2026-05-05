@@ -81,26 +81,25 @@ public class UserController {
         log.info("회원가입 성공! 로그인으로 이동");
         return "user/login";
     }
+
     /**
      * 중복된 아이디가 있는지 확인(ajax 처리)
+     * 
      * @return
      */
-     @ResponseBody
-     @PostMapping("/confirmId")
-     public boolean confirmId(@RequestParam(name="userId") String userId) {
-        UserDTO dto = userService.selectOne(userId);
-       
-       if(dto == null) return true;
-       
-       return false;
-     }
-     @GetMapping("/first")
-     public String showFirstPage() {
-         return "user/first";  // templates/user/first.html 을 찾습니다.
-     }
+    @ResponseBody
+    @PostMapping("/confirmId")
+    public boolean confirmId(@RequestParam(name = "userId") String userId) {
+        return userService.selectOne(userId) == null;
+    }
 
-     @GetMapping("/first2")
-     public String showFirst2Page() { // 메서드 이름은 겹치지 않게 변경
-         return "user/first2";  // templates/user/first2.html 을 찾습니다.
-     }
+    @GetMapping("/first")
+    public String showFirstPage() {
+        return "user/first"; // templates/user/first.html 을 찾습니다.
+    }
+
+    @GetMapping("/first2")
+    public String showFirst2Page() { // 메서드 이름은 겹치지 않게 변경
+        return "user/first2"; // templates/user/first2.html 을 찾습니다.
+    }
 }
