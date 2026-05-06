@@ -333,7 +333,6 @@ K-Stat 이용 중 자주 묻는 질문에 대해
   // 저장된 상태에 따라 UI 복원
   if (state.mode && state.mode !== "main") {
     toChatMode(state.mode);
-    renderHistory(); // 저장된 대화내역 복원
     scrollToBottom();
   } else {
     // 페이지가 새로 로드되었지만, 이전 대화가 없는 경우
