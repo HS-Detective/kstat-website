@@ -49,7 +49,10 @@ public class ChatApiController {
             case "glossary": targetUrl = fastApiBase + "/glossary"; break;
             case "faq":      targetUrl = fastApiBase + "/faq"; break;
             case "stats":    targetUrl = fastApiBase + "/chat/stats"; break; 
-            default:         return Map.of("reply", "알 수 없는 모드입니다.");
+            default:         return Map.of(
+                                     "reply", "알 수 없는 모드입니다.",
+                                     "meta", Map.of("mode", mode, "error", true)
+                                 );
         }
 
         try {
