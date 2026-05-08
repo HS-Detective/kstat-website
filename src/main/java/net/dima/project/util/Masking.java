@@ -8,6 +8,13 @@ public class Masking {
             return name.charAt(0) + "*";
         }
 
-        return name.charAt(0) + "*" + name.charAt(name.length() - 1);
+        StringBuilder masked = new StringBuilder();
+        masked.append(name.charAt(0));
+        for (int i = 1; i < name.length() - 1; i++) {
+            masked.append("*");
+        }
+        masked.append(name.charAt(name.length() - 1));
+
+        return masked.toString();
     }
 }
